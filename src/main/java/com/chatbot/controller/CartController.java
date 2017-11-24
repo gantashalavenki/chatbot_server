@@ -18,7 +18,13 @@ public class CartController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Cart getCart(@RequestParam String cartId){
-        return cartService.getCart(cartId);
+    public Cart getCart(@RequestParam String userId){
+        return cartService.getCartByUser(userId);
+    }
+
+
+    @RequestMapping(value = "/remove-cart-item",method = RequestMethod.POST)
+    public String removeCartItem(@RequestParam String cartId, @RequestParam String cartItemId){
+     return cartService.removeCartItem(cartId,cartItemId);
     }
 }

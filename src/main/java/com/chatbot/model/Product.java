@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigInteger;
+
 @Document(collection = "product")
 public class Product  {
 
@@ -14,6 +16,8 @@ public class Product  {
     private String name;
 
     private String image;
+
+    private BigInteger price;
 
     @JsonIgnore
     @DBRef
@@ -49,5 +53,13 @@ public class Product  {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public BigInteger getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigInteger price) {
+        this.price = price;
     }
 }

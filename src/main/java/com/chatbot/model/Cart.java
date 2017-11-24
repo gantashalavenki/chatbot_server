@@ -1,5 +1,6 @@
 package com.chatbot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,12 +14,14 @@ public class Cart {
     @Id
     private String id;
 
+    @JsonIgnore
     @DBRef
     private User user;
 
     @DBRef
-    private List<Product> productList =  new ArrayList<>();
+    private List<CartItem> cartItemList =  new ArrayList<>();
 
+    @JsonIgnore
     private boolean isActive;
 
     public String getId() {
@@ -37,12 +40,12 @@ public class Cart {
         this.user = user;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public List<CartItem> getCartItemList() {
+        return cartItemList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setCartItemList(List<CartItem> cartItemList) {
+        this.cartItemList = cartItemList;
     }
 
     public boolean isActive() {
@@ -52,7 +55,7 @@ public class Cart {
     public void setActive(boolean active) {
         isActive = active;
     }
-    public void addProduct(Product product){
-        productList.add(product);
+    public void addcartItem(CartItem cartItem){
+        cartItemList.add(cartItem);
     }
 }
