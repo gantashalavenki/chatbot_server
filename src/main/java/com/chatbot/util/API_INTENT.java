@@ -6,4 +6,5 @@ public interface API_INTENT {
     public final String SHIPPING_STATUS = "shipping_status";
     public final String PRODUCT_FIND = "product_find";
     public final String CART_VIEW = "cart_view";
+    public final String SMALL_TALK = "small_talk";
 }

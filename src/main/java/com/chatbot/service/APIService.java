@@ -5,6 +5,7 @@ import ai.api.AIDataService;
 import ai.api.AIServiceException;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
+import ai.api.model.Result;
 import com.chatbot.util.Constants;
 import com.google.gson.JsonElement;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class APIService {
     AIConfiguration aiConfiguration =  new AIConfiguration(Constants.API_AI_ACCESS_ID);
 
 
-    public Map<String, JsonElement> analyseText(String text){
+    public Result analyseText(String text){
         AIDataService dataService = new AIDataService(aiConfiguration);
 
         AIRequest request = new AIRequest(text);
@@ -28,7 +29,7 @@ public class APIService {
         } catch (AIServiceException e) {
             e.printStackTrace();
         }
-        return response.getResult().getParameters();
+        return response.getResult();
     }
 
 }

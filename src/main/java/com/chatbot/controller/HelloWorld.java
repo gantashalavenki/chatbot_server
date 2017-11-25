@@ -19,7 +19,6 @@ public class HelloWorld {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public @ResponseBody String getHello(){
         User u =  new User();
-        u.setAge(11);
         u.setName("bbadwdabbb");
         userMongoRepository.save(u);
         return "hlloe-"+u.getId()+"-"+userMongoRepository.findAll().get(0).getId();

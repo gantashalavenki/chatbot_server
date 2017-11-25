@@ -6,6 +6,7 @@ import com.chatbot.repository.CategoryRepository;
 import com.chatbot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void addProduct(String categoryName, String name, BigInteger price, String imagePath) {
+    public void addProduct(String categoryName, String name, BigInteger price, String imagePath, String tags) {
         Category category = categoryRepository.findByNameIgnoreCase(categoryName);
         if (category == null) {
             category = new Category();
@@ -32,6 +33,9 @@ public class ProductService {
         product.setName(name);
         product.setPrice(price);
         product.setImage(imagePath);
+        if(!StringUtils.isEmpty(tags)){
+            product.addTags(tags.split(","));
+        }
         productRepository.insert(product);
     }
 
@@ -52,12 +56,20 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public List<Product> getProductsByNameOrCategory(String name) {
+    public List<Product> searchProducts(String name) {
         List<Product> productList = getByCategory(name);
         List<Product> productListByName = productRepository.findByNameIgnoreCase(name);
         if (productListByName != null) {
             productList.addAll(productListByName);
         }
+        List<Product> productListByTag =  productRepository.findByTagsIgnoreCase(name);
+        if (productListByTag != null) {
+            productList.addAll(productListByTag);
+        }
         return productList;
+    }
+
+    public List<Product> findByTag(String tag){
+        return productRepository.findByTagsIgnoreCase(tag);
     }
 }

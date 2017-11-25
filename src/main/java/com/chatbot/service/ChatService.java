@@ -1,6 +1,6 @@
 package com.chatbot.service;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
+import ai.api.model.Result;
 import com.chatbot.model.Cart;
 import com.chatbot.model.Product;
 import com.chatbot.util.API_INTENT;
@@ -9,7 +9,6 @@ import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +29,16 @@ public class ChatService {
     private CartService cartService;
 
     public Map<String, Object> analyzeText(String text, String userId) {
-        Map<String, JsonElement> response = apiService.analyseText(text);
-        return handleResponse(response,userId);
+        Result result = apiService.analyseText(text);
+        if(result.getParameters().isEmpty()){
+            Map<String, Object> responseMap =  new HashMap<>();
+            responseMap.put(Constants.INTENT_NAME,API_INTENT.SMALL_TALK);
+            responseMap.put("speech",result.getFulfillment().getSpeech());
+            return responseMap;
+        } else {
+            Map<String, JsonElement> response = result.getParameters();
+            return handleResponse(response,userId);
+        }
     }
 
     public Map<String, Object> handleResponse(Map<String, JsonElement> response, String userId) {
@@ -46,7 +53,7 @@ public class ChatService {
                 break;
             case API_INTENT.PRODUCT_FIND:
                 String query = response.get(Constants.API_AI_PRODUCT_NAME).getAsString();
-                List<Product> productList = productService.getProductsByNameOrCategory(query);
+                List<Product> productList = productService.searchProducts(query);
                 responseMap.put(Constants.PRODUCT_LIST,productList);
                 break;
             case API_INTENT.CART_VIEW:

@@ -19,8 +19,8 @@ public class ProductController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody String add(@RequestParam String category, @RequestParam String name, @RequestParam BigInteger price, @RequestParam String imagePath){
-      productService.addProduct(category,name,price,imagePath);
+    public @ResponseBody String add(@RequestParam String category, @RequestParam String name, @RequestParam BigInteger price, @RequestParam String imagePath, @RequestParam(required = false) String tags){
+      productService.addProduct(category,name,price,imagePath,tags);
       return "Success";
     }
 
@@ -33,5 +33,10 @@ public class ProductController {
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable("productId") String productId){
       return productService.getProduct(productId);
+    }
+
+    @RequestMapping(value = "/searchBytag", method = RequestMethod.GET)
+    public List<Product> searchByTag(@RequestParam String tag){
+        return productService.findByTag(tag);
     }
 }

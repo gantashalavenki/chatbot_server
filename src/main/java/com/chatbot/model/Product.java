@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Document(collection = "product")
 public class Product  {
@@ -22,6 +25,10 @@ public class Product  {
     @JsonIgnore
     @DBRef
     private Category category;
+
+    @JsonIgnore
+    private List<String> tags =  new ArrayList<>();
+
 
     public String getId() {
         return id;
@@ -61,5 +68,17 @@ public class Product  {
 
     public void setPrice(BigInteger price) {
         this.price = price;
+    }
+
+    public List<String> getTagList() {
+        return tags;
+    }
+
+    public void setTagList(List<String> tagList) {
+        this.tags = tagList;
+    }
+
+    public void addTags(String [] tagArray){
+        tags.addAll(Arrays.asList(tagArray));
     }
 }
