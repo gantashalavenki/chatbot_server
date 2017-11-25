@@ -8,13 +8,14 @@ public class User {
     @Id
     private String id;
     private String name;
-    private int age;
+    private String facebookId;
+
     public User() {
     }
 
-    public User(String name, int age) {
+    public User(String name, String facebookId) {
         this.name = name;
-        this.age = age;
+        this.facebookId = facebookId;
     }
 
     public String getId() {
@@ -31,17 +32,19 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getFacebookId() {
+        return facebookId;
     }
-    public void setAge(int age) {
-        this.age = age;
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
     }
+
+
     @Override
     public String toString() {
         return "User{" +
                 ", name='" + name + '\'' +
-                ", Age=" + age +
                 '}';
     }
 }
