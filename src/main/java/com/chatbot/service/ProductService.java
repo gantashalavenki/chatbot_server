@@ -21,7 +21,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public void addProduct(String categoryName, String name, BigInteger price, String imagePath) {
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = categoryRepository.findByNameIgnoreCase(categoryName);
         if (category == null) {
             category = new Category();
             category.setName(categoryName);
@@ -41,7 +41,7 @@ public class ProductService {
 
 
     public List<Product> getByCategory(String categoryName) {
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = categoryRepository.findByNameIgnoreCase(categoryName);
         if (category == null) {
             return new ArrayList<>();
         }
@@ -54,7 +54,7 @@ public class ProductService {
 
     public List<Product> getProductsByNameOrCategory(String name) {
         List<Product> productList = getByCategory(name);
-        List<Product> productListByName = productRepository.findByName(name);
+        List<Product> productListByName = productRepository.findByNameIgnoreCase(name);
         if (productListByName != null) {
             productList.addAll(productListByName);
         }
