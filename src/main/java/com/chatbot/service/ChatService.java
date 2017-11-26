@@ -59,6 +59,8 @@ public class ChatService {
             case API_INTENT.CART_VIEW:
                 Cart cart  = cartService.getCartByUser(userId);
                 responseMap.put("cart",cart);
+            case API_INTENT.PROCEED_CHECKOUT:
+
             default:
         }
 

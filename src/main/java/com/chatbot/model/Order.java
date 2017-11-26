@@ -13,6 +13,9 @@ public class Order {
     @DBRef
     private Cart cart;
 
+    @DBRef
+    private User user;
+
     private String address;
 
     private String status;
@@ -40,4 +43,22 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
+

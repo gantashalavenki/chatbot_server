@@ -22,4 +22,8 @@ public class UserService {
        userMongoRepository.save(user);
       return user;
    }
+
+   public User getUSerById(String userId){
+       return userMongoRepository.findById(userId);
+   }
 }
